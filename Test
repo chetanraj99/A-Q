@@ -1,1 +1,160 @@
 test
+public class DocReader {
+
+    public static String read(String path) throws Exception {
+
+        XWPFDocument document =
+                new XWPFDocument(
+                        new FileInputStream(path));
+
+        StringBuilder sb = new StringBuilder();
+
+        document.getParagraphs()
+                .forEach(p ->
+                        sb.append(p.getText())
+                          .append("\n"));
+
+        return sb.toString();
+    }
+}
+
+
+
+
+EmbeddingModel embeddingModel =
+        OllamaEmbeddingModel.builder()
+                .baseUrl("http://localhost:11434")
+                .modelName("nomic-embed-text")
+                .build();
+
+
+
+EmbeddingStore<TextSegment> embeddingStore =
+        new InMemoryEmbeddingStore<>();
+
+
+String text = DocReader.read("employee-policy.docx");
+
+Document document = Document.from(text);
+
+DocumentSplitter splitter =
+        DocumentSplitters.recursive(
+                500,
+                100);
+
+List<TextSegment> segments =
+        splitter.split(document);
+
+for (TextSegment segment : segments) {
+
+    Embedding embedding =
+            embeddingModel
+                    .embed(segment.text())
+                    .content();
+
+    embeddingStore.add(
+            embedding,
+            segment);
+}
+
+
+
+
+ChatLanguageModel chatModel =
+        OllamaChatModel.builder()
+                .baseUrl("http://localhost:11434")
+                .modelName("llama3.1")
+                .temperature(0.2)
+                .build();
+
+
+
+
+
+public String getContext(String question) {
+
+    Embedding questionEmbedding =
+            embeddingModel
+                    .embed(question)
+                    .content();
+
+    EmbeddingSearchRequest request =
+            EmbeddingSearchRequest.builder()
+                    .queryEmbedding(questionEmbedding)
+                    .maxResults(3)
+                    .build();
+
+    EmbeddingSearchResult<TextSegment> result =
+            embeddingStore.search(request);
+
+    return result.matches()
+            .stream()
+            .map(match -> match.embedded().text())
+            .collect(Collectors.joining("\n"));
+}
+
+
+
+
+public String ask(String question) {
+
+    String context = getContext(question);
+
+    String prompt = """
+        Use only the provided context.
+
+        Context:
+        %s
+
+        Question:
+        %s
+
+        If answer is unavailable, say 'Information not found'.
+        """.formatted(context, question);
+
+    return chatModel.generate(prompt);
+}
+
+
+
+@RestController
+@RequestMapping("/qa")
+public class QaController {
+
+    @Autowired
+    private RagService ragService;
+
+    @GetMapping
+    public String ask(
+            @RequestParam String question) {
+
+        return ragService.ask(question);
+    }
+
+
+
+
+
+
+}
+
+
+
+
+
+String prompt = """
+    Read the following content and generate:
+
+    1. Question
+    2. Answer
+
+    Generate at least 20 question-answer pairs.
+
+    Content:
+    %s
+    """.formatted(documentText);
+
+String response =
+        chatModel.generate(prompt);
+
+System.out.println(response);
