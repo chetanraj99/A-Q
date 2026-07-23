@@ -158,3 +158,69 @@ String response =
         chatModel.generate(prompt);
 
 System.out.println(response);
+
+
+
+
+
+package com.iaf.Sprj.service;
+
+import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.store.embedding.EmbeddingStore;
+import dev.langchain4j.data.segment.TextSegment;
+import org.springframework.stereotype.Service;
+
+@Service
+public class RagServiceImpl implements RagService {
+
+    private final EmbeddingModel embeddingModel;
+    private final ChatModel chatModel;
+    private final EmbeddingStore<TextSegment> embeddingStore;
+
+    public RagServiceImpl(EmbeddingModel embeddingModel,
+                           ChatModel chatModel,
+                           EmbeddingStore<TextSegment> embeddingStore) {
+        this.embeddingModel = embeddingModel;
+        this.chatModel = chatModel;
+        this.embeddingStore = embeddingStore;
+    }
+
+    @Override
+    public String ask(String question) {
+        String context = getContext(question);
+
+        String prompt = """
+            Use only the provided context.
+
+            Context:
+            %s
+
+            Question:
+            %s
+
+            If answer is unavailable, say 'Information not found'.
+            """.formatted(context, question);
+
+        return chatModel.chat(prompt);
+    }
+
+    private String getContext(String question) {
+        Embedding questionEmbedding =
+                embeddingModel.embed(question).content();
+
+        EmbeddingSearchRequest request =
+                EmbeddingSearchRequest.builder()
+                        .queryEmbedding(questionEmbedding)
+                        .maxResults(3)
+                        .build();
+
+        EmbeddingSearchResult<TextSegment> result =
+                embeddingStore.search(request);
+
+        return result.matches()
+                .stream()
+                .map(match -> match.embedded().text())
+                .collect(Collectors.joining("\n"));
+    }
+}
