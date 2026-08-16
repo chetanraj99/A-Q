@@ -1,0 +1,17 @@
+def allConstruct(target,wordBank):
+    table=[[]]*(len(target)+1)
+    table[0]=[[]]
+    for i in range(len(target)+1):
+        for word in wordBank:
+            if target[i:i+len(word)]==word:
+                newCombination=list(map(lambda x:x+[word],table[i]))
+                temp=table[i+len(word)]
+                table[i+len(word)]=[*temp,*newCombination]
+    return table[len(target)]
+print(allConstruct('purple',['purp','p','ur','le','purpl']))
+print(allConstruct('abcdef',['ab','abc','cd','def','abcd','ef','c']))
+print(allConstruct('skateboard',['bo','rd','ate','t','ska','sk','boar']))
+print(allConstruct('enterapotentpot',['a','p','ent','enter','ot','o','t']))
+print(allConstruct('eeeeeeeeeeeeeeeeeeeeef',['e','ee','eee','eeee','eeeee','eeeeeee','eeeeeeeeee','eeeeeeeeeeeee','eeeeeeeeeeeeeeeeef']))
+
+

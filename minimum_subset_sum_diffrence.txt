@@ -1,0 +1,47 @@
+def minsubsumdif(arr,n,w):
+    t=[[True  if i == 0 else False if  j==0  else False for i in range(w+1)] for j in range(n+1)]
+                
+    for i in range(1,n+1):
+        for j in range(1,w+1):
+            if arr[i-1]<=j:
+                t[i][j]=t[i-1][j-arr[i-1]] or t[i-1][j]
+            else:
+                t[i][j]=t[i-1][j]
+    return t
+    
+arr=[1,2,7]
+table=minsubsumdif(arr,len(arr),sum(arr))
+vector=table[-1]
+rang=sum(arr)
+mn=[]
+for i in range(rang//2+1):
+    if vector[i]==True:
+        mn.append(rang-2*i)
+print(min(mn))
+        
+        
+def cansum(arr,w,n):
+    t=[[True  if i == 0 else False if  j==0  else False for i in range(w+1)] for j in range(n+1)]
+                
+    for i in range(1,n+1):
+        for j in range(1,w+1):
+            if arr[i-1]<=j:
+                t[i][j]=t[i-1][j-arr[i-1]] or t[i-1][j]
+            else:
+                t[i][j]=t[i-1][j]
+    print(t)
+    return t
+# print(Subset_sum([2,3,5,7,10],5,14))
+
+arr=[1,2,7]
+table=cansum(arr,sum(arr),len(arr))
+vector=table[-1]
+rang=sum(arr)
+mn=[]
+for i in range(rang//2+1):
+    if vector[i]==True:
+        mn.append(rang-2*i)
+print(min(mn))
+        
+
+

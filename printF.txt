@@ -1,0 +1,29 @@
+#include <iostream>
+#include<vector>
+using namespace std;
+void printF(int ind,int s,int sum,int arr[],int n,vector<int> &ds){
+    
+    if(ind==n){
+        if(s==sum){ 
+            for(auto it:ds)cout<<it<<" ";
+            cout<<endl;
+        }
+        return;
+    }
+    ds.push_back(arr[ind]);
+    s+=arr[ind];
+    printF(ind+1,s,sum,arr,n,ds);
+    
+    s-=arr[ind];
+    ds.pop_back();
+    printF(ind+1,s,sum,arr,n,ds);
+    
+}
+int main() {
+   vector<int> ds;
+    int sum=2;
+    int arr[]={1,2,1};
+    printF(0,0,sum,arr,3,ds);
+    
+    return 0;
+}

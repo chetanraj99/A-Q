@@ -1,0 +1,23 @@
+def countConstruct(target,wordBank,memo={}):
+    if target in memo:
+        return memo[target]
+    if target=='':
+        return 1
+    total_count=0
+    for word in wordBank:
+        try:
+            if target.index(word)==0:
+                
+                numwaysforRest=countConstruct(target[len(word):],wordBank,memo)
+                memo[target]=numwaysforRest
+                total_count+=numwaysforRest
+        except:
+            continue
+    return total_count
+        
+print(countConstruct('purple',['purp','p','ur','le','purpl']))
+print(countConstruct('abcdef',['ab','abc','cd','def','abcd']))
+print(countConstruct('skateboard',['bo','rd','ate','t','ska','sk','boar']))
+print(countConstruct('enterapotentpot',['a','p','ent','enter','ot','o','t']))
+print(countConstruct('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeef',['e','ee','eee','eeeeee','eeeeeeeee','eeeeeeeeeee','eeeeeeeeeeeee','eeeeeeeeeeeeeeee','eeeeeeeeeeeeeeeef']))
+

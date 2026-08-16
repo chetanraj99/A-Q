@@ -1,0 +1,15 @@
+def gridtraveler(m,n,memo={}):
+    key=f'{m},{n}'
+    if key in memo:
+        return memo[key]
+    if m==0 or n==0:
+        return 0
+    if m==1 and n==1:
+        return 1
+    memo[key] = gridtraveler(m-1,n,memo)+gridtraveler(m,n-1,memo)
+    return memo[key]
+    
+print(gridtraveler(2,3))
+print(gridtraveler(1,1))
+print(gridtraveler(3,3))
+print(gridtraveler(18,18))

@@ -1,0 +1,26 @@
+def fib(n):
+    if n<=2:
+        return 1
+    return fib(n-1)+fib(n-2)
+x=fib(50)
+print(x)
+
+# def allConstruct(target,wordBank):
+#     if target=='':
+#         return [[]]
+#     result=[]
+#     for word in wordBank:
+#         try:
+#             if target.index(word)==0:
+#                 suffix=target[len(word):]
+#                 suffixways=allConstruct(suffix,wordBank)
+#                 targetways= suffixways+[word]
+#                 result.append(targetways)
+#         except:
+#             continue
+#     return result
+
+# print(allConstruct('purple',['purp','p','ur','le','purpl']))
+# [[[[], 'le'], 'purp'], [[[[[], 'le'], 'p'], 'ur'], 'p'], ['purpl']]
+
+print([['purp', 'p'], ['purpl']]+[['le']])

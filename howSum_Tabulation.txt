@@ -1,0 +1,58 @@
+def HowSum(target,numbers):
+    table=[None]*(target+1)
+    table[0]=[]
+    for i in range(len(table)):
+        try:
+            if table[i]!=None:
+                for num in numbers:
+                    table[i+num]=[*table[i],num]
+        except:
+            continue
+    return table[target]
+    
+print(HowSum(7,[2,3]))
+print(HowSum(7,[5,3,4,7]))
+print(HowSum(7,[2,4]))
+print(HowSum(8,[2,3,5]))
+print(HowSum(300,[7,14]))
+
+#####################
+def HowSum(target,numbers):
+    table=[None]*(target+1)
+    table[0]=[]
+    for i in range(len(table)):
+        try:
+            if table[i]!=None:
+                for num in numbers:
+                    table[i+num]=[*table[i],num]
+        except:
+            continue
+    return table[target] 
+    
+print(HowSum(7,[2,3]))
+print(HowSum(7,[5,3,4,7]))
+print(HowSum(7,[2,4]))
+print(HowSum(8,[2,3,5]))
+print(HowSum(300,[7,14]))
+
+############################### best sum
+def BestSum(target,numbers):
+    table=[None]*(target+1)
+    table[0]=[]
+    for i in range(len(table)):
+        try:
+            if table[i]!=None:
+                for num in numbers:
+                    combination=[*table[i],num]
+                    if not(table[i+num]) or len(table[i+num])>len(combination):
+                        table[i+num]=combination
+        except:
+            continue
+    return table[target] 
+    
+print(BestSum(7,[2,3]))
+print(BestSum(7,[5,3,4,7]))
+print(BestSum(7,[2,4]))
+print(BestSum(8,[2,3,5]))
+print(BestSum(300,[7,14]))
+

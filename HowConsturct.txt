@@ -1,0 +1,22 @@
+def HowConstruct(target,wordBank,memo={}):
+    if target in memo:
+        return memo[target]
+    if target=='':
+        return []
+    subs=None
+    for word in wordBank:
+        try:
+            if target.index(word)==0:
+                suffix=target[len(word):]
+                subs=HowConstruct(suffix,wordBank,memo)
+                memo[target]=[word,*subs]
+                return memo[target]
+        except:
+            continue
+    memo[target]=None
+    return memo[target]
+print(HowConstruct('abcdef',['ab','abc','acd','def','abcd']))
+print(HowConstruct('skateboard',['bo','rd','ate','t','ska','sk','boar','d']))
+print(HowConstruct('enterapotentpot',['a','p','ent','enter','ot','o','t']))
+
+print(HowConstruct('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeef',['e','eef','eee','eeee','eeeee','eeeeeee','eeeeeeeeee','eeeeeeeeeeeee','eeeeeeeeeeeeeeeee']))

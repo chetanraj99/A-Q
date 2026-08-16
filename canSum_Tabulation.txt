@@ -1,0 +1,17 @@
+def CanSum(target,numbers):
+    table=[False]*(target+1)
+    table[0]=True
+    for i in range(len(table)):
+        try:
+            if table[i]==True:
+                for num in numbers:
+                    table[i+num]=True
+        except:
+            continue
+    return table[target]
+    
+print(CanSum(7,[2,3]))
+print(CanSum(7,[5,3,4,7]))
+print(CanSum(7,[2,4]))
+print(CanSum(8,[2,3,5]))
+print(CanSum(300,[7,14]))

@@ -1,0 +1,25 @@
+def allConstruct(target,wordBank):
+    if target=='':
+        return [[]]
+    result=[]
+    for word in wordBank:
+        try:
+            if target.index(word)==0:
+                suffix=target[len(word):]
+                suffixways=allConstruct(suffix,wordBank)
+                # print(suffixways)
+                targetways= list(map(lambda x : [word]+x, suffixways))
+                # list(map(lambda x : x + K, test_list))
+                # print(targetways)
+                result.append(*targetways)
+        except:
+            continue
+    return result
+
+print(allConstruct('purple',['purp','p','ur','le','purpl']))
+print(allConstruct('abcdef',['ab','abc','cd','def','abcd','ef','c']))
+print(allConstruct('skateboard',['bo','rd','ate','t','ska','sk','boar']))
+print(allConstruct('enterapotentpot',['a','p','ent','enter','ot','o','t']))
+print(allConstruct('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeef',['e','ee','eee','eeeeee','eeeeeeeee','eeeeeeeeeee','eeeeeeeeeeeee','eeeeeeeeeeeeeeee','eeeeeeeeeeeeeeee']))
+
+

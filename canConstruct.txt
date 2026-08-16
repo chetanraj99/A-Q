@@ -1,0 +1,41 @@
+'''def canConstruct(target,wordBank):
+    if target=='':
+        return True
+    for word in wordBank:
+        try:
+            if target.index(word)==0:
+                suffix=target[len(word):]
+                if canConstruct(suffix,wordBank)==True:
+                    return True
+        except:
+            continue
+    return False
+    
+print(canConstruct('abcdef',['ab','abc','cd','def','abcd']))
+print(canConstruct('skateboard',['bo','rd','ate','t','ska','sk','boar']))
+print(canConstruct('enterapotentpot',['a','p','ent','enter','ot','o','t']))
+print(canConstruct('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeef',['e','ee','eee','eeee','eeeee','eeeeeee','eeeeeeeeee','eeeeeeeeeeeee','eeeeeeeeeeeeeeeee']))
+'''
+
+def canConstruct(target,wordBank,memo={}):
+    if target in memo:
+        return memo[target]
+    if target=='':
+        return True
+    for word in wordBank:
+        try:
+            if target.index(word)==0:
+                suffix=target[len(word):]
+                if canConstruct(suffix,wordBank,memo)==True:
+                    memo[target]=True
+                    return True
+        except:
+            continue
+    memo[target]=False
+    return False
+    
+print(canConstruct('abcdef',['ab','abc','cd','def','abcd']))
+print(canConstruct('skateboard',['bo','rd','ate','t','ska','sk','boar']))
+print(canConstruct('enterapotentpot',['a','p','ent','enter','ot','o','t']))
+print(canConstruct('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeef',['e','ee','eee','eeeeee','eeeeeeeee','eeeeeeeeeee','eeeeeeeeeeeee','eeeeeeeeeeeeeeee','eeeeeeeeeeeeeeee']))
+

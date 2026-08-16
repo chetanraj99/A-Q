@@ -1,0 +1,92 @@
+'''def cansum(targetsum,numbers,memo={}):
+    if targetsum in memo:
+        return memo[targetsum]
+    if targetsum<0:
+        return False
+    if targetsum==0:
+        return True
+    for num in numbers:
+        remainder=targetsum-num
+        if cansum(remainder,numbers,memo)==True:
+            memo[targetsum]=True
+            return True
+    memo[targetsum]=False
+    return False
+        
+print(cansum(7,[2,3]))'''        
+#print(cansum(7,[5,3,4,7]))    
+#print(cansum(8,[2,3,5]))      
+#print(cansum(300,[7,14]))
+
+#Output:
+#True
+#True
+#True
+#True
+# This code is giving wrong output on multiple function calls in python.
+
+# def knapsack(arr,w,n):
+#     table=[[True  if i == 0 else False if  j==0  else 0 for i in range(n+1)] for j in range(w+1)]
+    
+#     if arr[n-1]<=w:
+#         return max(knapsack(arr,w-arr[n-1],n-1),knapsack(arr,w,n-1))
+#     elif arr[n-1]>w:
+#         return knapsack(arr,w,n-1)
+
+def cansum(arr,n,w):
+                
+    for i in range(1,n+1):
+        for j in range(1,w+1):
+            if arr[i-1]<=j:
+                t[i][j]=t[i-1][j-arr[i-1]] or t[i-1][j]
+            else:
+                t[i][j]=t[i-1][j]
+    print(t)
+    return t[n][w]
+t=[[True  if i == 0 else False if  j==0  else False for i in range(8+1)] for j in range(3+1)]
+print(cansum([2,3,5],3,8))
+        
+'''/* C++ implementation of knapsack tabulation method*/
+#include <bits/stdc++.h>
+#include<iostream>
+using namespace std;
+
+int cansum(int arr[],int n,int w){
+    int table[50][50];
+    for(int i=0;i<=n;i++){
+        for(int j=0;j<=w;j++){
+            if(i==0)
+                table[i][j]=0;
+            if(j==0)
+                table[i][j]=1;
+        }
+    }
+   for(int i=0;i<=n;i++){
+        for(int j=1;j<=w;j++){
+           if(arr[i-1]<=j)
+        table[i][j]=table[i][j-arr[i-1]] || table[i-1][j];
+    else
+        table[i][j]=table[i-1][j];
+        }
+        
+    }
+    for(int i=0;i<=n;i++){
+        for(int j=0;j<=w;j++){
+            cout<<table[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    return table[n][w];
+}
+int main()
+{
+	int arr[] = {2,3,5};
+	int n = sizeof(arr) / sizeof(arr[0]);
+	int w=8;
+	int res=cansum(arr,n,w);
+	cout<<res;
+	return 0;
+}
+
+
+'''

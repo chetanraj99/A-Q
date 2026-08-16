@@ -1,0 +1,79 @@
+'''def bestSum(target,numbers):
+    if target==0:
+        return []
+    if target<0:
+        return None
+    shortestcombination=None
+    
+    for num in numbers:
+        s=[]
+        remainder=target-num
+        remainderCombination=bestSum(remainder,numbers)
+        if remainderCombination!=None:
+	        combination=[ *remainderCombination,num]
+	        s=combination
+	        if shortestcombination==None or len(shortestcombination)>len(s):
+	            shortestcombination=s
+        s=[]
+    return shortestcombination
+print(bestSum(7,[5,3,4,7]))
+print(bestSum(8,[2,3,5]))
+print(bestSum(8,[1,4,5]))
+print(bestSum(100,[1,2,5,25]))'''
+
+def bestSum(target,numbers,memo={}):
+    if target in memo:
+        return memo[target]
+    if target==0:
+        return []
+    if target<0:
+        return None
+    shortestcombination=None
+    for num in numbers:
+    	if num<=0:
+    		continue
+        s=[]
+        remainder=target-num
+        remainderCombination=bestSum(remainder,numbers,memo)
+        if remainderCombination!=None:
+	        combination=[ *remainderCombination,num]
+	        s=combination
+	        if shortestcombination==None or len(shortestcombination)>len(s):
+	            shortestcombination=s
+        s=[]
+    memo[target]=shortestcombination
+    return shortestcombination
+print(bestSum(7,[5,3,4,7]))
+print(bestSum(8,[2,3,5]))
+print(bestSum(8,[1,4,5]))
+print(bestSum(100,[-1,2,5,25]))
+
+
+'''def bestSum(target,numbers):
+    if target==0:
+        return []
+    if target<0:
+        return None
+    shortestcombination=None
+    
+    for num in numbers:
+       # s=[]
+        remainder=target-num
+        remainderCombination=bestSum(remainder,numbers)
+        try:
+            
+                if remainderCombination!=None:
+	                combination=[ *remainderCombination,num]
+	     #   s=combination
+                if shortestcombination==None or len(shortestcombination)>len(combination):
+	                shortestcombination=combination
+	   
+         # s=[]
+        except:
+            pass
+    return shortestcombination
+print(bestSum(7,[5,3,4,7]))
+print(bestSum(8,[2,3,5]))
+print(bestSum(8,[1,4,5]))
+print(bestSum(100,[1,2,5,25]))'''
+

@@ -1,0 +1,13 @@
+def Mp(x,y,z):
+    g=10
+    t=y-z
+    v=((g*x*x)/(2*t))**0.5
+    print(round(v,2))
+    
+n=int(input())
+l=[]
+for i in range(n):
+    l.append(list(map(int,input().split())))
+for i in range(n):
+    Mp(l[i][0],l[i][1],l[i][2])
+

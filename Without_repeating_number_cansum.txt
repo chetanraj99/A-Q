@@ -1,0 +1,33 @@
+'''def cansum(arr,j,i):
+    n=i
+    s=j
+    table=[[True  if i == 0 else False if  j==0  else False for i in range(s+1)] for j in range(n)]
+
+    for i in range(n+1):
+        for j in range(1,s+1):
+            try:
+                if arr[i]>j:
+                    table[i][j]=table[i-1][j]
+                    continue
+            except:
+                continue
+            if arr[i]==j:
+                table[i][j]=True
+            if table[i-1][j] or table[i-1][j-arr[i]]:
+                table[i][j]=True
+    return table
+print(cansum([2,3,5],8,3))'''
+
+
+def cansum(arr,n,w):
+    t=[[True  if i == 0 else False if  j==0  else False for i in range(w+1)] for j in range(n+1)]
+                
+    for i in range(1,n+1):
+        for j in range(1,w+1):
+            if arr[i-1]<=j:
+                t[i][j]=t[i-1][j-arr[i-1]] or t[i-1][j]
+            else:
+                t[i][j]=t[i-1][j]
+    print(t)
+    return t[n][w]
+print(cansum([2,3,5],3,8))

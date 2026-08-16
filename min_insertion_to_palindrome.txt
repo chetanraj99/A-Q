@@ -1,0 +1,17 @@
+#Minimum number of insertion in a string to make it a palindrome
+#minimum number of deletion to make a string palindromic subsequence
+#both are same
+def lps(x,y,m,n):
+    t=[[0 for j in range(n+1)] for i in range(m+1)]
+    for i in range(1,m+1):
+        for j in range(1,n+1):
+            if x[i-1]==y[j-1]:
+                t[i][j]= 1+t[i-1][j-1]
+            else:
+                t[i][j]= max(t[i][j-1],t[i-1][j])
+    return t[m][n]
+        
+s='agbcbae'
+l=lps(s,s[::-1],len(s),len(s))
+print(len(s)-l)
+

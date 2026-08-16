@@ -1,0 +1,13 @@
+def all_subsequences(ind,arr,n,ds=[]):
+    if ind==n:
+        print(*ds)
+        if len(ds)==0:
+            print("{}")
+        return
+    ds.append(arr[ind])
+    all_subsequences(ind+1,arr,n,ds)
+    ds.pop()
+    all_subsequences(ind+1,arr,n,ds)
+
+all_subsequences(0,[3,1,2],3)
+

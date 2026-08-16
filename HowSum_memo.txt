@@ -1,0 +1,21 @@
+def sum(target,numbers,memo={}):
+    if target in memo:
+        return memo[target]
+    if target==0:
+        return []
+    if target<0:
+        return None
+    for num in numbers:
+        rem=target-num
+        remResult=sum(rem,numbers,memo)
+        if remResult != None:
+            memo[target]=[*remResult,num]
+            return memo[target]
+    memo[target]=None
+    return None
+    
+print(sum(7,[2,3]))
+print(sum(7,[5,3,4,7]))
+print(sum(7,[2,4]))
+print(sum(8,[2,3,5]))
+print(sum(300,[7,14]))
