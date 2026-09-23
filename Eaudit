@@ -1,0 +1,38 @@
+package com.wipro.iaf.eAudit.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.wipro.iaf.eAudit.dto.RegisterRequest;
+import com.wipro.iaf.eAudit.dto.RegisterResponse;
+import com.wipro.iaf.eAudit.service.RegisterService;
+
+@RestController
+@RequestMapping("/api/register")
+public class RegisterController {
+
+    private final RegisterService registerService;
+
+    public RegisterController(RegisterService registerService) {
+        this.registerService = registerService;
+    }
+
+    @PostMapping
+    public ResponseEntity<RegisterResponse> saveRegister(
+            @RequestBody RegisterRequest request) {
+
+        RegisterResponse response =
+                registerService.saveRegister(request);
+
+        if (!response.isSuccess()) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(response);
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(response);
+    }
+}
