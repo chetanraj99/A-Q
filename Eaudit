@@ -36,3 +36,31 @@ public class RegisterController {
                 .body(response);
     }
 }
+
+
+
+{
+  "rgstrId": "REG001",
+  "rgstrDesc": "Electrical Maintenance Register",
+  "createdBy": "chetan",
+  "authorityNo": "AUTH-101",
+  "authorityDate": 1790121600000,
+  "remarks": "Monthly audit register"
+}
+
+{
+  "chklstDesc": "Check earthing connections",
+  "chcklstAuthNo": "CH-001",
+  "chcklstAuthDate": "2026-09-23T10:00:00",
+  "chcklstRmrk": "Verify before month end",
+  "crtdBy": "chetan"
+}
+
+
+
+{
+  "id": { "secId": "SEC01" },
+  "unitDetail": "Unit 1",
+  "createdBy": "chetan"
+}
+
